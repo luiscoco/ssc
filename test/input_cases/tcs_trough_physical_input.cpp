@@ -3,38 +3,10 @@
 #include "vartab.h"
 #include "core.h"
 
-#include "tcs_trough_physical_input.h"
+#include "input_toolbox.h"
 
-using namespace std;
 
-/**
- * Custom Testing Handler that does nothing
- */
-ssc_bool_t my_handler(ssc_module_t, ssc_handler_t, int , float, float, const char *, const char *, void *){
-	return true;
-}
-
-void var(var_table* vt, string name, string value){
-	var_data* vd = new var_data(value);
-	vt->assign(name, *vd);
-}
-
-void var(var_table* vt, string name, double value){
-	var_data* vd = new var_data((ssc_number_t)value);
-	vt->assign(name, *vd);
-}
-
-void var(var_table* vt, string name, float* array, int length){
-	var_data* vd = new var_data(array, length);
-	vt->assign(name, *vd);
-}
-
-void var(var_table* vt, string name, float* matrix, int nr, int nc){
-	var_data* vd = new var_data(matrix, nr, nc);
-	vt->assign(name, *vd);
-}
-
-void assign_default_variables(var_table* vt){
+void assign_default_variables_tcs(var_table* vt){
 	var(vt, "file_name", "weather.csv");
 	var(vt, "track_mode", 1);
 	var(vt, "tilt", 0);
@@ -78,9 +50,9 @@ void assign_default_variables(var_table* vt){
 
 }
 
-void create_default(){
+void create_default_tcs_trough_physical(){
 	var_table* vartab = new var_table;
-	assign_default_variables(vartab);
+	assign_default_variables_tcs(vartab);
 
 	ssc_data_t* p_data = reinterpret_cast<ssc_data_t*>(vartab);
 	// copy vartab data into p_data

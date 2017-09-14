@@ -38,7 +38,7 @@ protected:
 };
 
 /// Test some init actions
-TEST_F(CSVCase_WeatherfileTest, initTest){
+TEST_F(CSVCase_WeatherfileTest, initTest_lib_weatherfile){
 
 	EXPECT_EQ(wf.header().location, "875760") << "CSV Case: Init test\n";
 	EXPECT_EQ(wf.header().city, "Buenos_Aires") << "CSV Case: Init test\n";
@@ -60,7 +60,7 @@ TEST_F(CSVCase_WeatherfileTest, normalizeCityTest_lib_weatherfile){
 }
 
 /// Test reading first, second and custom row
-TEST_F(CSVCase_WeatherfileTest, readTest){
+TEST_F(CSVCase_WeatherfileTest, readTest_lib_weatherfile){
 	weather_record r;
 	/* read first row */
 	wf.read(&r);
