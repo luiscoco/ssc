@@ -5,13 +5,6 @@
 #include "core.h"
 #include <string>
 
-/**
-* Custom Testing Handler that does nothing
-*/
-static ssc_bool_t my_handler(ssc_module_t, ssc_handler_t, int, float, float, const char *, const char *, void *){
-	return true;
-}
-
 static void var(var_table* vt, std::string name, std::string value){
 	var_data* vd = new var_data(value);
 	vt->assign(name, *vd);
@@ -31,5 +24,15 @@ static void var(var_table* vt, std::string name, float* matrix, int nr, int nc){
 	var_data* vd = new var_data(matrix, nr, nc);
 	vt->assign(name, *vd);
 }
+
+
+class TestHandler : public handler_interface
+{
+public:
+	compute_module *m_cm;
+	TestHandler(compute_module *cm) : handler_interface(cm) {  }
+	void on_log(const std::string &text, int type, float time){ } 
+	bool on_update(const std::string &text, float percent_done, float time){ return true; }
+};
 
 #endif

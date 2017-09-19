@@ -8,11 +8,17 @@
 
 class CMWindPowerTest : public ::testing::Test{
 private:
+	double e = 0.0001;
 	void assign_default_variables(var_table* vt);
 
 protected:
 	void create_default();
 	cm_windpower* cm;
+	var_table* vartab;
+
+	void SetUp(){
+		vartab = new var_table;
+	}
 };
 
 void CMWindPowerTest::assign_default_variables(var_table* vt){
@@ -27,13 +33,15 @@ void CMWindPowerTest::assign_default_variables(var_table* vt){
 	for (unsigned int i = 0; i < 161; i++){
 		turbine_powercurve[i] = turbine_powercurve_val[i];
 		powercurve_powerout[i] = powercurve_powerout_val[i];
-		xcoord[i] = xcoord_val[i];
-		ycoord[i] = ycoord_val[i];
+		if (i < 32) {
+			xcoord[i] = xcoord_val[i];
+			ycoord[i] = ycoord_val[i];
+		}
 	}
 #ifdef _MSC_VER	
 	std::string file = "../../../test/input_docs/wind.srw";
 #else	
-	std::string file = "../test/input_docs/weather-noRHum.csv";
+	std::string file = "../test/input_docs/wind.srw";
 #endif	
 	var(vt, "wind_resource_filename", file);
 	var(vt, "wind_resource_shear", 0.14000000059604645);
@@ -57,13 +65,13 @@ void CMWindPowerTest::assign_default_variables(var_table* vt){
 }
 
 void CMWindPowerTest::create_default(){
-	var_table* vartab = new var_table;
 	assign_default_variables(vartab);
-
 	ssc_data_t* p_data = reinterpret_cast<ssc_data_t*>(vartab);
-	// copy vartab data into p_data
 
 	std::string name = "windpower";
-	int result = ssc_module_exec_simple(name.c_str(), p_data);
-	std::cout << std::endl << result;
+	ssc_module_t p_mod = ssc_module_create(name.c_str());
+	if (!p_mod) return;
+	TestHandler h(cm);
+	cm->compute(&h, vartab);
+	ssc_module_free(p_mod);
 }
