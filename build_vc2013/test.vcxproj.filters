@@ -23,9 +23,6 @@
     <ClCompile Include="..\test\ssc_test\cmod_windpower_test.cpp">
       <Filter>ssc_test</Filter>
     </ClCompile>
-    <ClCompile Include="..\test\input_cases\windpower_input.cpp">
-      <Filter>input_cases</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="shared_test">
@@ -48,8 +45,8 @@
     <ClInclude Include="..\test\input_cases\input_toolbox.h">
       <Filter>input_cases</Filter>
     </ClInclude>
-    <ClInclude Include="..\test\input_cases\windpower_input.h">
-      <Filter>input_cases</Filter>
+    <ClInclude Include="..\test\ssc_test\cmod_windpower_test.h">
+      <Filter>ssc_test</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
