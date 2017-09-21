@@ -7,6 +7,7 @@
 #include "..\input_cases\weather_inputs.h"
 #include "cmod_windpower.h"
 
+
 /**
  * CMWindPower tests the cmod_windpower using wind resource var_data dynamically allocated during SetUp() 
  * from hard-coded test data in weather_inputs.cpp. TearDown() must free the var_data entries using 
@@ -14,7 +15,7 @@
  * var_table containing all the default values. These can be modified in individual tests using
  * before compute() is called.
  */
-class CMWindPowerTest : public ::testing::Test{
+class CMWindPowerIntegration : public ::testing::Test{
 private:
 	void assign_default_variables(var_table* vt);
 	cm_windpower* cm;
@@ -30,17 +31,17 @@ public:
 	void SetUp(){
 		cm = new cm_windpower();
 		vartab = new var_table;
-		//windresourcedata = create_winddata_array();
+		windresourcedata = create_winddata_array();
 		assign_default_variables(vartab);
 	}
 	void TearDown(){
-		//free_winddata_array(windresourcedata);
+		free_winddata_array(windresourcedata);
 		delete vartab;
 		delete cm;
 	}
 };
 
-void CMWindPowerTest::assign_default_variables(var_table* vt){
+void CMWindPowerIntegration::assign_default_variables(var_table* vt){
 	float* turbine_powercurve = new float[161];
 	float* powercurve_powerout = new float[161];
 	float* xcoord = new float[32];
@@ -62,8 +63,8 @@ void CMWindPowerTest::assign_default_variables(var_table* vt){
 #else	
 	std::string file = "../test/input_docs/wind.srw";
 #endif	
-	var(vt, "wind_resource_filename", file);
-	//var(vt, "wind_resource_data", *windresourcedata);
+	//var(vt, "wind_resource_filename", file);
+	var(vt, "wind_resource_data", *windresourcedata);
 	var(vt, "wind_resource_shear", 0.140);
 	var(vt, "wind_resource_turbulence_coeff", 0.100);
 	var(vt, "system_capacity", 48000);
@@ -84,7 +85,7 @@ void CMWindPowerTest::assign_default_variables(var_table* vt){
 
 }
 
-bool CMWindPowerTest::compute(){
+bool CMWindPowerIntegration::compute(){
 	ssc_data_t* p_data = reinterpret_cast<ssc_data_t*>(vartab);
 	std::string name = "windpower";
 	ssc_module_t p_mod = ssc_module_create(name.c_str());
