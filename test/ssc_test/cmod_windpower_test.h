@@ -22,7 +22,7 @@ private:
 	var_data* windresourcedata;
 
 public:
-	double e = 0.0001;
+	double e = 1000;
 	/// creates the cmod with variables in vartab and returns true if exec() successful
 	bool compute();
 	/// contains all input and output variables for testing
