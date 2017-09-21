@@ -25,6 +25,14 @@ static void var(var_table* vt, std::string name, float* matrix, int nr, int nc){
 	vt->assign(name, *vd);
 }
 
+static void var(var_table* vt, std::string name, var_data &vd){
+	vt->assign(name, vd);
+}
+
+static void modify_var(var_table* vt, std::string name, var_data &vd){
+	vt->unassign(name);
+	vt->assign(name, vd);
+}
 
 class TestHandler : public handler_interface
 {

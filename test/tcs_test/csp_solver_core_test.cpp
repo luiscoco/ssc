@@ -64,25 +64,7 @@ protected:
 	}
 	void TearDown(){
 		/// free memory of weatherdata
-		data->table.unassign("lat");
-		data->table.unassign("lon");
-		data->table.unassign("tz");
-		data->table.unassign("elev");
-		data->table.unassign("year");
-		data->table.unassign("month");
-		data->table.unassign("day");
-		data->table.unassign("hour");
-		data->table.unassign("dn");
-		data->table.unassign("df");
-		data->table.unassign("tdry");
-		data->table.unassign("tdew");
-		data->table.unassign("rhum");
-		data->table.unassign("pres");
-		data->table.unassign("wdir");
-		data->table.unassign("wspd");
-		data->table.unassign("aod");
-		data->table.unassign("pwp");
-		data->table.unassign("alb");
+		free_weatherdata_array(data);
 	}
 };
 
