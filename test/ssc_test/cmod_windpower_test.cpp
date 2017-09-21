@@ -24,7 +24,6 @@ TEST_F(CMWindPowerIntegration, DISABLED_ResourceSimpleWake_cmod_windpower){
 #endif
 
 	std::cout << "Time Difference: " << clock() - Start << std::endl;
-	
 }
 
 TEST_F(CMWindPowerIntegration, DISABLED_ResourceWAsp_cmod_windpower){
@@ -81,4 +80,29 @@ TEST_F(CMWindPowerIntegration, Weibull_cmod_windpower){
 	std::cout << "Time Difference: " << clock() - Start << std::endl;
 }
 
+/// Using 30m Wind Resource Data
+TEST_F(CMWindPowerIntegration, Resource30mSimpleWake_cmod_windpower){
+	clock_t Start = clock();
+#ifdef _MSC_VER	
+	std::string file = "../../../test/input_docs/wind_30m.srw";
+#else	
+	std::string file = "../test/input_docs/wind_30m.srw";
+#endif
+	modify_var(vartab, "wind_resource_filename", file);
+	vartab->unassign("wind_resource_data");
 
+	compute();
+	float ann_energy = vartab->lookup("annual_energy")->num.at(0);
+#ifdef DEBUG
+	EXPECT_NEAR(ann_energy, 32999724, e);
+	EXPECT_NEAR(vartab->lookup("monthly_energy")->num.at(0), 2.8027e6, e);
+	EXPECT_NEAR(vartab->lookup("monthly_energy")->num.at(11), 2.8027e6, e);
+#endif
+#ifdef RELEASE
+	EXPECT_NEAR(ann_energy, 33224154, e);
+	EXPECT_NEAR(vartab->lookup("monthly_energy")->num.at(0), 2.8218e6, e);
+	EXPECT_NEAR(vartab->lookup("monthly_energy")->num.at(11), 2.8218e6, e);
+#endif
+
+	std::cout << "Time Difference: " << clock() - Start << std::endl;
+}

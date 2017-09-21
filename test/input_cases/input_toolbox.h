@@ -34,6 +34,11 @@ static void modify_var(var_table* vt, std::string name, double value){
 	vt->assign(name, value);
 }
 
+static void modify_var(var_table* vt, std::string name, std::string value){
+	vt->unassign(name);
+	vt->assign(name, value);
+}
+
 static void modify_var(var_table* vt, std::string name, var_data &vd){
 	vt->unassign(name);
 	vt->assign(name, vd);
