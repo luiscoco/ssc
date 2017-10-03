@@ -17,16 +17,15 @@
  */
 class CMWindPowerIntegration : public ::testing::Test{
 private:
-	void assign_default_variables(var_table* vt);
 	cm_windpower* cm;
 	var_data* windresourcedata;
+	void assign_default_variables(var_table* vt);
 
 public:
-	double e = 1000;
-	/// creates the cmod with variables in vartab and returns true if exec() successful
-	bool compute();
 	/// contains all input and output variables for testing
 	var_table* vartab;
+	bool compute();
+	double e = 1000;
 	/// creates all variables on the heap, which must be deleted in TearDown()
 	void SetUp(){
 		cm = new cm_windpower();
@@ -86,12 +85,7 @@ void CMWindPowerIntegration::assign_default_variables(var_table* vt){
 }
 
 bool CMWindPowerIntegration::compute(){
-	ssc_data_t* p_data = reinterpret_cast<ssc_data_t*>(vartab);
-	std::string name = "windpower";
-	ssc_module_t p_mod = ssc_module_create(name.c_str());
-	if (!p_mod) return false;
 	TestHandler h(cm);
 	bool result = cm->compute(&h, vartab);
-	ssc_module_free(p_mod);
 	return result;
 }

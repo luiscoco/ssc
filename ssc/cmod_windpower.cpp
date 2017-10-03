@@ -197,6 +197,9 @@ void cm_windpower::exec()
 	wind_power_calculator wpc;
 
 	wpc.m_dShearExponent = as_double("wind_resource_shear");
+
+	ssc_number_t *pc_w = as_array("wind_turbine_powercurve_windspeeds", &wpc.m_iLengthOfTurbinePowerCurveArray);
+	ssc_number_t *pc_p = as_array("wind_turbine_powercurve_powerout", NULL);
 	wpc.m_dHubHeight = as_double("wind_turbine_hub_ht");
 	wpc.m_dRotorDiameter = as_double("wind_turbine_rotor_diameter");
 	//double meas_ht = as_double("meas_ht");
@@ -206,9 +209,6 @@ void cm_windpower::exec()
 	wpc.m_dWakeDecayCoefficient = 0.07;	// necessary for Park model
 	wpc.m_iWakeModelChoice = as_integer("wind_farm_wake_model");
 	wpc.m_dTurbulenceIntensity = as_double("wind_resource_turbulence_coeff");
-
-	ssc_number_t *pc_w = as_array("wind_turbine_powercurve_windspeeds", &wpc.m_iLengthOfTurbinePowerCurveArray);
-	ssc_number_t *pc_p = as_array("wind_turbine_powercurve_powerout", NULL);
 	//ssc_number_t *pc_rpm = as_array( "pc_rpm", NULL );
 
 	ssc_number_t *wind_farm_xCoordinates = as_array("wind_farm_xCoordinates", &wpc.m_iNumberOfTurbinesInFarm);
